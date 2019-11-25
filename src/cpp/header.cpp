@@ -268,7 +268,7 @@ SinObj* prim_print_aux(SinObj* obj) {
         } else if (bv == 1) {
             printf("#t");
         } else {
-            printf("Unknown Boolean value: %llu", bv);
+            printf("Unknown Boolean value: %lu", bv);
         }
     }
         break;
@@ -281,7 +281,7 @@ SinObj* prim_print_aux(SinObj* obj) {
         printf(")");
         break;
     case Int:
-        printf("%lld", unwrap_int(obj, "prim_print_aux Int case."));
+        printf("%ld", unwrap_int(obj, "prim_print_aux Int case."));
         break;
     case Str:
         printf("%s", unwrap_str(obj, "prim_print_aux Str case."));
@@ -301,7 +301,7 @@ SinObj* prim_print_aux(SinObj* obj) {
         printf("Sets not currently supported!");
         break;
     case Other:
-        printf("(print v); unrecognized value %llu", reinterpret_cast<u64>(obj->valueptr));
+        printf("(print v); unrecognized value %lu", reinterpret_cast<u64>(obj->valueptr));
         break;
     }
     return const_init_void();
