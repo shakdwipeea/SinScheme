@@ -38,8 +38,8 @@
    (build-path project-path "lib" "local" "include")))
 
 ; locations where brew installs libgc (brew install libgc)
-(define brew-include-dir "/usr/local/Cellar/bdw-gc/7.6.0/include/")
-(define brew-libgc-path "/usr/local/Cellar/bdw-gc/7.6.0/lib/libgc.a")
+(define brew-include-dir "/usr/include/gc")
+(define brew-libgc-path "/usr/lib/x86_64-linux-gnu/libgc.so")
 
 (define libgc-include-dir
   (if (directory-exists? brew-include-dir)
@@ -72,7 +72,7 @@
 
 
 (define clang++-path
-  (let ([clang++-path-submit-server "/opt/llvm-3.9.0/bin/clang++"])
+  (let ([clang++-path-submit-server "/usr/bin/clang++"])
     (if (file-exists? clang++-path-submit-server)
         clang++-path-submit-server
         "clang++")))
@@ -89,6 +89,7 @@
                  ; "-O2" ;;; TODO figure out why optimization fails
                  "-Wall"
                  "-Weverything"
+                 "-Wno-c++98-compat"
                  ; "-g"
                  ; "-DGC_DEBUG"
                  )))
@@ -109,7 +110,6 @@
   ; create a complete llvm program with prelude.
   (define complete-program (string-append (file->string compiled-prelude-name) "\n\n;;;;;;;End Prelude;;;;;;;\n\n" compiled-code))
   (display complete-program out-port))
-
 (define (llvmir->exe combined-ir-filepath clang-path all-compiler-flags libgc-lib-path outfilename)
   (system (format "~a ~a ~a ~a -o ~a" clang-path all-compiler-flags libgc-lib-path combined-ir-filepath outfilename)))
 

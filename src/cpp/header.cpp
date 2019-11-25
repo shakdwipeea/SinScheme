@@ -169,14 +169,14 @@ SinObj* const_init_int(s64 i) {
 
 SinObj* const_init_void() {
     SinObj* ret = alloc_atomic(1);
-    ret->valueptr = NULL;
+    ret->valueptr = nullptr;
     ret->type = Void;
     return ret;
 }
 
 SinObj* const_init_null() {
     SinObj* ret = alloc_atomic(1);
-    ret->valueptr = NULL;
+    ret->valueptr = nullptr;
     ret->type = Null;
     return ret;
 }
@@ -358,14 +358,14 @@ SinObj* print_vector(SinObj* obj) {
 SinObj* print_hash(SinObj* obj) {
     Map* map = unwrap_hash(obj, "print_hash");
 
-    while (map != NULL) {
+    while (map != nullptr) {
         printf("(");
         prim_print_aux(map->key);
         printf(" . ");
         prim_print_aux(map->value);
         printf(")");
 
-        if (map->next != NULL) {
+        if (map->next != nullptr) {
             printf(" ");
         }
         map = map->next;
@@ -857,7 +857,7 @@ SinObj* prim_hash_45has_45key_63(SinObj* hash, SinObj* key) { // hash-has-key?
 }
 
 SinObj* applyprim_hash(SinObj* cur) { // apply hash
-    Map* map = NULL;
+    Map* map = nullptr;
 
     while (cur->type != Null) {
         SinObj *car = reinterpret_cast<SinObj*>(GC_MALLOC(1)),
@@ -888,7 +888,7 @@ SinObj* prim_hash_45ref(SinObj* hash, SinObj* key) { // hash-ref
     Map* map = unwrap_hash(hash, "hash-ref");
 
     SinObj* val = map_get(map, key);
-    if (val == NULL) {
+    if (val == nullptr) {
         fatal_err("Map did not have requested key");
     }
     return val;
